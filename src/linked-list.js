@@ -7,7 +7,7 @@ class LinkedList {
         this.length=0;
     }
 
-    append(data) {
+   append(data){
         const newNode=new Node(data);
         if (this.length==0){
             this._head=newNode;
@@ -19,6 +19,9 @@ class LinkedList {
             this._tail = newNode;
         }
         this.length++;
+        console.log(this);
+        console.log('implement append');
+        return this;
     }
 
     head() {
@@ -58,9 +61,16 @@ class LinkedList {
             return false;
         }
         let node= new Node(data);
+        console.log(node);
         if(index==0){
             node.next=this._head;
-            this._head.prev=node;
+            this.head.prev=node;
+        }
+        else if(index==this._length){
+            this.tail.next = node;
+            node.prev = this.tail;
+
+            this.tail = node;
         }
         else{
             let current=this._head;
@@ -80,6 +90,8 @@ class LinkedList {
             current.prev = node;
         }
         this._length++;
+        console.log('implement insertAt');
+        return this;
     }
 
     isEmpty() {
@@ -90,6 +102,7 @@ class LinkedList {
         this._head=null;
         this._tail=null;
         this.length=0;
+        console.log('implement clear');
         return this;
     }
 
@@ -99,9 +112,9 @@ class LinkedList {
         }
         let current;
         if(index==0){
-            current=this._head;
-            this._head=this._head.next;
-            this._head.prev=null;
+            this._head=null;
+            this._tail=null;
+            this.length=0;
         }
         else if(index==this._length-1){
             current=this._tail;
@@ -123,6 +136,8 @@ class LinkedList {
         }
     
         this.length--;
+        console.log('implement deleteAt');
+        return this;
     }
 
     reverse() {
@@ -132,14 +147,17 @@ class LinkedList {
         this._tail=newHead;
         let current=this._head;
         let i=0;
-        while(i<this.length){
-            let prev=current.prev;
-            let next=current.next;
-            current.prev=next;
-            current.next=prev;
-            current=current.next;
-            i++;
+        if(this.length>1){
+            while(i<this.length){
+                let prev=current.prev;
+                let next=current.next;
+                current.prev=next;
+                current.next=prev;
+                current=current.next;
+                i++;
+            }
         }
+        console.log('implement reverse');
         return this;
     }
 
@@ -154,7 +172,7 @@ class LinkedList {
             pos++;
         }
         return -1;
-    }
+    };
 }
 
 module.exports = LinkedList;
